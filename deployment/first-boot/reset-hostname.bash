@@ -38,15 +38,7 @@ if [ "$#" -gt 1 ]; then
 	exit 1
 fi
 
-USR='ubuntu'
-USR_HOME_DIR="/home/${USR}"
-EDGE_SEC_DIR="${USR_HOME_DIR}/EDGESEC"
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-
-if [ ! -f "${USR_HOME_DIR}/.resetHostname" ]; then
-	# only run this script if ~/.resetHostname exists
-	exit 0
-fi
 
 function randomHostname() {
 	ADJECTIVE_LIST="${THIS_DIR}/adjectives.list"
@@ -66,8 +58,8 @@ function randomHostname() {
 
 # copy a new ssh key to the server
 function setupSSHTunnel() {
-	machinectl shell "$USR"@ /usr/bin/systemctl --user start ssh-tunnel-key-update.service
-	machinectl shell "$USR"@ /usr/bin/systemctl --user enable ssh-tunnel-key-update.service
+	/usr/bin/systemctl start ssh-tunnel-key-update.service
+	/usr/bin/systemctl enable ssh-tunnel-key-update.service
 }
 
 HOSTNAME="$1"
@@ -79,6 +71,3 @@ orig_hostname="$(hostname)"
 sudo hostnamectl set-hostname "$HOSTNAME"
 
 setupSSHTunnel
-
-rm "${USR_HOME_DIR}/.resetHostname"
-sudo systemctl disable reset-hostname.service || true

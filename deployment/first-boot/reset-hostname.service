@@ -2,13 +2,19 @@
 Description=Reset hostname
 Before=network.target
 
-[Service]
+# If first boot fails, we will rerun this on next boot
+Before=first-boot-complete.target
+Wants=first-boot-complete.target
 
+# Only run this service on the first boot
+# e.g. if /etc/machine-id does not exist
+# (see https://www.freedesktop.org/software/systemd/man/systemd.unit.html#:~:text=ConditionFirstBoot%3D%C2%B6)
+ConditionFirstBoot=true
+
+[Service]
 Type=oneshot
 
-# gets disabled by itself
 ExecStart=/usr/bin/env bash /usr/local/EDGESec/deploy/reset-hostname.bash
 
 [Install]
 WantedBy=network.target
-
