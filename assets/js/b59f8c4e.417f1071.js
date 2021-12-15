@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus=self.webpackChunkdocusaurus||[]).push([[438],{8986:function(a){a.exports=JSON.parse('{"allTagsPath":"/EDGESec/blog/tags","slug":"/EDGESec/blog/tags/facebook","name":"facebook","count":1,"permalink":"/EDGESec/blog/tags/facebook"}')}}]);
